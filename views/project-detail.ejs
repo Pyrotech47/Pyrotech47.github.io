@@ -1,0 +1,160 @@
+<%- include('partials/header') %>
+
+<div class="project-detail">
+
+  <!-- Project Hero -->
+  <section class="project-hero">
+    <div class="project-hero-image">
+      <div class="project-hero-placeholder">
+        <span><%= project.title.charAt(0) %></span>
+      </div>
+    </div>
+    <div class="project-hero-overlay">
+      <div class="container">
+        <div class="project-breadcrumb">
+          <a href="/projects">Projects</a>
+          <span>/</span>
+          <span><%= project.title %></span>
+        </div>
+        <div class="project-hero-meta">
+          <span class="card-category"><%= project.category %></span>
+          <span class="card-year"><%= project.year %></span>
+        </div>
+        <h1 class="project-hero-title"><%= project.title %></h1>
+        <p class="project-hero-desc"><%= project.shortDescription %></p>
+        <div class="project-hero-actions">
+          <% if (project.itchUrl) { %>
+          <a href="<%= project.itchUrl %>" target="_blank" rel="noopener" class="btn btn-primary">
+            <!-- itch.io icon -->
+            <img src="/images/itchio-logo.svg" alt="itch.io" width="18" height="18" />
+            View on itch.io
+          </a>
+          <% } %>
+          <% if (project.playUrl) { %>
+          <a href="<%= project.playUrl %>" target="_blank" rel="noopener" class="btn btn-secondary">
+            ▶ Play Demo
+          </a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Content -->
+  <section class="section project-content">
+    <div class="container">
+      <div class="project-layout">
+
+        <!-- Main Content -->
+        <div class="project-main">
+          <div class="project-section">
+            <h2>About This Project</h2>
+            <div class="project-description">
+              <% project.fullDescription.trim().split('\n').filter(p => p.trim()).forEach(para => { %>
+              <p><%= para.trim() %></p>
+              <% }) %>
+            </div>
+          </div>
+
+          <div class="project-section">
+            <h2>Key Highlights</h2>
+            <ul class="highlights-list">
+              <% project.highlights.forEach(h => { %>
+              <li>
+                <span class="highlight-icon">◆</span>
+                <%= h %>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="project-sidebar">
+          <div class="sidebar-card">
+            <h3>Project Details</h3>
+            <div class="sidebar-detail">
+              <span class="sidebar-label">Category</span>
+              <span><%= project.category %></span>
+            </div>
+            <div class="sidebar-detail">
+              <span class="sidebar-label">Year</span>
+              <span><%= project.year %></span>
+            </div>
+            <div class="sidebar-detail">
+              <span class="sidebar-label">Role</span>
+              <span>Technical Designer</span>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Technologies</h3>
+            <div class="sidebar-tags">
+              <% project.tags.forEach(tag => { %>
+              <span class="card-tag"><%= tag %></span>
+              <% }) %>
+            </div>
+          </div>
+
+          <% if (project.itchUrl || project.playUrl) { %>
+          <div class="sidebar-card">
+            <h3>Links</h3>
+            <% if (project.itchUrl) { %>
+            <a href="<%= project.itchUrl %>" target="_blank" rel="noopener" class="sidebar-link">
+              → View on itch.io
+            </a>
+            <% } %>
+            <% if (project.playUrl) { %>
+            <a href="<%= project.playUrl %>" target="_blank" rel="noopener" class="sidebar-link">
+              → Play Demo
+            </a>
+            <% } %>
+          </div>
+          <% } %>
+
+          <a href="/projects" class="btn btn-outline btn-full">← Back to Projects</a>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Projects -->
+  <% if (related.length > 0) { %>
+  <section class="section related-projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">// More Work</span>
+        <h2 class="section-title">Related Projects</h2>
+      </div>
+      <div class="related-grid">
+        <% related.forEach(rp => { %>
+        <article class="project-card">
+          <a href="/projects/<%= rp.id %>" class="project-card-link">
+            <div class="project-card-image">
+              <div class="project-card-placeholder">
+                <span><%= rp.title.charAt(0) %></span>
+              </div>
+              <div class="project-card-overlay">
+                <span class="project-card-view">View Project →</span>
+              </div>
+            </div>
+            <div class="project-card-body">
+              <div class="project-card-meta">
+                <span class="card-category"><%= rp.category %></span>
+                <span class="card-year"><%= rp.year %></span>
+              </div>
+              <h3 class="project-card-title"><%= rp.title %></h3>
+              <p class="project-card-desc"><%= rp.shortDescription %></p>
+            </div>
+          </a>
+        </article>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+</div>
+
+<%- include('partials/footer') %>

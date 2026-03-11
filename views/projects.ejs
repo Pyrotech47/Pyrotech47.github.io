@@ -1,0 +1,90 @@
+<%- include('partials/header') %>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-label">// Portfolio</span>
+    <h1 class="page-hero-title">All Projects</h1>
+    <p class="page-hero-subtitle">
+      A collection of game mechanics, systems, and experiences built with
+      Unreal Engine 5 during my studies at Canadore College and beyond.
+    </p>
+  </div>
+</section>
+
+<section class="section projects-section">
+  <div class="container">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <% categories.forEach(cat => { %>
+      <button class="filter-btn" data-filter="<%= cat %>"><%= cat %></button>
+      <% }) %>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid" id="projectsGrid">
+      <% projects.forEach(project => { %>
+      <article class="project-card" data-category="<%= project.category %>">
+        <a href="/projects/<%= project.id %>" class="project-card-link">
+
+          <!-- Project Image -->
+          <div class="project-card-image">
+            <% if (project.coverImage) { %>
+              <img 
+                src="<%= project.coverImage %>" 
+                alt="<%= project.title %>"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              />
+              <div class="project-card-placeholder" style="display:none;">
+                <span><%= project.title.charAt(0) %></span>
+              </div>
+            <% } else { %>
+              <div class="project-card-placeholder">
+                <span><%= project.title.charAt(0) %></span>
+              </div>
+            <% } %>
+
+            <!-- Hover Overlay -->
+            <div class="project-card-overlay">
+              <span class="project-card-view">View Project →</span>
+            </div>
+
+            <!-- Featured Badge -->
+            <% if (project.featured) { %>
+            <div class="project-card-badge">Featured</div>
+            <% } %>
+          </div>
+
+          <!-- Project Info -->
+          <div class="project-card-body">
+            <div class="project-card-meta">
+              <span class="card-category"><%= project.category %></span>
+              <span class="card-year"><%= project.year %></span>
+            </div>
+            <h3 class="project-card-title"><%= project.title %></h3>
+            <p class="project-card-desc"><%= project.shortDescription %></p>
+            <div class="card-tags">
+              <% project.tags.slice(0, 3).forEach(tag => { %>
+              <span class="card-tag"><%= tag %></span>
+              <% }) %>
+              <% if (project.tags.length > 3) { %>
+              <span class="card-tag card-tag--more">+<%= project.tags.length - 3 %></span>
+              <% } %>
+            </div>
+          </div>
+
+        </a>
+      </article>
+      <% }) %>
+    </div>
+
+    <!-- No Results Message -->
+    <div class="no-results" id="noResults" style="display:none;">
+      <p>No projects found in this category.</p>
+    </div>
+
+  </div>
+</section>
+
+<%- include('partials/footer') %>
